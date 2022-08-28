@@ -1,0 +1,108 @@
+System wastservice
+
+Request deposit : deposit(TRUCKLOAD,TRUCKTYPE)
+Reply loadaccept : loadaccpet(_)
+Reply loadreject : loadreject(_)
+Dispatch goto : goto(POSITION)
+Dispatch executeaction : executeaction(POSITION)
+
+Context ctxwasteservice ip [host="localhost" port=8032]
+
+
+QActor wasteservice context ctxwasteservice{
+	
+	[#
+			val MAX = mapOf(wasteservice.state.Material.PLASTIC to 22.0,
+				wasteservice.state.Material.GLASS to 22.0)
+			val currentState = wasteservice.state.WasteState()
+			lateinit var truckType : wasteservice.state.Material //glass, plastic
+			var truckLoad : Double = 0.0 	
+			
+	#]
+	
+	
+	State idle initial{
+		updateResource [# currentState.toStringRepresentation() #] 
+	}Transition t whenRequest deposit -> control  
+	
+	State control{
+		onMsg(deposit : deposit(TRUCKLOAD,TRUCKTYPE)){
+			[#
+				 
+				 try {
+				 	truckType = wasteservice.state.Material.valueOf(payloadArg(1).trim().uppercase())
+				 	truckLoad = payloadArg(0).trim().toDouble()
+				 	if(currentState.canStore(truckType, MAX[truckType]!!, truckLoad)) {
+				 		currentState.addLoad(truckType, truckLoad)
+			 		#]
+			 			updateResource [# currentState.toStringRepresentation() #]
+			 			
+			 			replyTo deposit with loadaccept : loadaccpet(_) 
+			 			forward transporttrolley -m goto : goto(indoor)
+			 			
+			 		[#
+				 	} else {
+				 	#] 
+				 		replyTo deposit with loadreject : loadreject(_)
+				 	[#
+				 	}
+				 } catch(e : Exception) {
+				 #]
+				 	replyTo deposit with loadreject : loadreject(_)
+				[#
+				 }
+				 
+			#]
+			
+		}
+	}Transition t0 whenMsg executeaction -> deposit
+				   
+	
+	State deposit{
+		println("deposit.....")
+		if [# truckType.toString() == "GLASS" #]{
+			println(truckType) 
+			//forward transporttrolley -m goto : goto(Glass)
+		}else{
+			println(truckType)
+			//forward transporttrolley -m goto : goto(Plastic)
+		}
+	}
+
+	
+}
+
+	
+QActor transporttrolley context ctxwasteservice{
+		[#
+			lateinit var TrolleyPos : String
+		#]
+	State idle initial{
+		[# TrolleyPos = "home" #]
+		updateResource [# "trolleyPos(home)" #]  
+	}Transition t whenMsg goto -> move
+	
+	State move{
+		onMsg (goto : goto(home)) {
+			//Go Home
+			updateResource [# "trolleyPos(home)" #] 
+		}
+		onMsg (goto : goto(indoor)) {
+			//Go indoor
+			updateResource [# "trolleyPos(indoor)" #] 			
+		}
+		/* onMsg (goto : goto(Plastic)) {
+			//Go PlasticBox
+			updateResource [# "trolleyPos(plasticBox)" #] 
+		}
+		onMsg (goto : goto(Glass)) {
+			//Go glassBox
+			updateResource [# "trolleyPos(glassBox)" #] 
+		}*/
+		
+		forward wasteservice -m executeaction : executeaction(_)
+	}Transition t whenMsg goto -> move
+		
+	
+	
+}

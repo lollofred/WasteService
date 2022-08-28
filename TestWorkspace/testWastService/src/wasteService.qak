@@ -1,0 +1,96 @@
+System wasteservice
+
+Request depositrequest : depositrequest(MATERIAL, TRUCKLOAD)
+Reply loadaccept       : loadaccept(_)
+Reply loadrejected     : loadrejected(_)
+Request pickup         : pickup(_)
+Request deposit        : deposit(Box)
+Request home           : home(_)
+Reply executeaction : executeaction(RESULT)
+
+Context ctxwasteservice ip [host = "localhost" port = 8032]
+
+QActor wasteservice context ctxwasteservice {
+   
+    [#
+        var currentcurrentRequestMaterialToStore = ""
+        var currentRequestTruckloadToStore = 0.0
+        val currentMaterialsWeightsMap = mutableMapOf<String, Double>("Plastic" to 0.0, "Glass" to 0.0)
+        val maxMaterialsWeightsMap = mutableMapOf<String, Double>("Plastic" to 500.0, "Glass" to 500.0)
+        val currentState = wasteservice.state.WasteState()
+    #]
+
+    State idle initial {
+        println("$name | in idle")
+        printCurrentMessage
+    }
+
+    Transition t0 whenRequest depositrequest -> handlerequest
+   
+    State handlerequest {
+        printCurrentMessage
+        onMsg(depositrequest : depositrequest(MATERIAL, TRUCKLOAD)){
+            [#
+             try {
+                    currentRequestMaterialToStore = payloadArg(0)
+                    currentRequestTruckloadToStore = payloadArg(1).toDouble()
+                    val currentWeightMaterialToStore = currentMaterialsWeightsMap[currentRequestMaterialToStore]
+                    val currentMaxWeightMaterialToStore = maxMaterialsWeightsMap[currentRequestMaterialToStore]
+
+                    if[# currentWeightMaterialToStore != null &&
+                        (currentWeightMaterialToStore + currentRequestTruckloadToStore) <= currentMaxWeightMaterialToStore 
+                        {
+                            currentState.addLoad(truckType, truckLoad) #]
+                            [# currentMaterialsWeightsMap[currentRequestMaterialToStore] = currentWeightMaterialToStore + currentRequestTruckloadToStore #]
+                            updateResource [# currentState.toStringRepresentation() #]
+                            replyTo depositrequest with loadaccept : loadaccept(_)
+                        }
+                    else{
+                        replyTo depositrequest with loadrejected : loadrejected(_)
+                    }
+            } catch(e : Exception) {
+				 	replyTo deposit with loadreject : loadreject(_)
+				 }
+            #]
+
+        }
+    }
+    Goto idle
+}
+
+QActor transporttrolley context ctxwastservice{
+		[#
+			lateinit var TrolleyPos : String
+		#]
+	State idle initial{
+		[# TrolleyPos = "home" #]
+		updateResource [# "trolleyPos(home)" #]  
+	}Transition t0 whenRequest pickup -> pickup
+		
+	State pickup{
+		[# TrolleyPos = "Indoor" #]		
+		updateResource [# "trolleyPos(indoor)" #]
+		replyTo pickup with executeaction : executeaction(donePickup)
+	}Transition t0 whenRequest deposit -> deposit
+	
+	State deposit{
+		onMsg(deposit : deposit(Box)){
+			[#	var box = payloadArg(0)	#]
+			println(box)
+			if[# box.trim().lowercase()=="plastic" #]{
+                [# TrolleyPos = "plasticBox" #]		
+				updateResource [# "trolleyPos(plasticBox)" #]	
+			}else{
+				[# TrolleyPos = "glassBox" #]		
+				updateResource [# "trolleyPos(glassBox)" #]
+			}
+		}
+		replyTo deposit with executeaction : executeaction(doneDeposit)
+	}Transition t0 whenRequest pickup -> pickup
+				  whenRequest home -> home
+				  
+	State home{
+		replyTo home with executeaction : executeaction(doneHome)
+	}Goto idle
+	
+}

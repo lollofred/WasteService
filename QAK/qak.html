@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <!--
+<link rel="stylesheet" type="text/css" href="../css/issStyle1.css">
+<script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+<style type="text/css">
+body
+{
+    margin-left:  30px;
+    margin-right: 30px;
+};
+
+P
+{
+    font-family: Tahoma;
+    font-size: 10pt;
+};
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+	font-size: 93%;
+}
+
+a:hover {
+    background-color: #cccccc;
+}
+
+
+hr {
+    clear: both;
+    height: 1px;
+    color: #242424;
+    background-color: transparent;
+}
+
+h1, h2, h3 {
+    color: #242424;
+    clear: left;
+    font: 100% Tahoma, Helvetica, Arial, sans-serif;
+    margin-bottom: 0.5em;
+    padding-top: 0.5em;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+top {
+	width: 100%;
+}
+
+
+#i {
+    color: #ff1010;
+}
+tt{
+	font-family: "Arial";
+    font-size: 90%;
+	color: #006600;
+}
+em{
+	font-family: "Arial";
+    font-size: 80%;
+	font-weight: bold;
+	border-style:solid;
+	border-color: #abe876;
+    color: #1632cc;
+}
+bc{
+	font-family: "Arial";
+	font-size: 90%;
+	font-weight: bold;
+    color: #990000;
+	background-color: #fcf8c7;
+}
+ks{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #0000CD	;
+	font-size: 90%;
+}
+kc{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #008000	;
+	font-size: 90%;
+}
+pre{
+	font-family: "Consolas";
+	font-size: 85%;
+	background-color: #f5f5f5;
+	border: 1.5px solid silver;
+	padding: 5px;
+}
+m{
+	font-family: "Helvetica";
+	line-height: 100%;
+ 	font-size: 75%;
+}
+div.body{
+	 
+    font-size: 18px;
+}
+k{
+    color: #990000;
+	font-weight: bold;
+	font-size: 90%;
+}
+h1 {
+    font-size: 150%;
+    background-color: #b2c0ff;
+	padding: 10px;
+}
+
+h2 {
+    background-color: #9ed8ff;
+    font-size: 130%;
+}
+
+h3 {
+	background-color: #e6ccff;
+    font-size: 100%;
+}
+h4 {
+    background-color: #ccffcc;
+    font-size: 100%;
+	width: 95%;
+	border-radius: 5px;
+	padding: 2px;
+}
+h5 {
+    background-color: #d5ffb0;
+    font-size: 100%;
+
+}
+div.req{
+	background-color: #d9ffb3;
+    font-size: 18px;
+	width: 700px;
+    border: 3px solid green;
+    padding: 15px;
+    margin: 10px;
+}
+div.remark{
+	background-color: #E3F2FD;
+    border: 1.5px solid #d5f2ed;
+    padding: 15px;
+    margin: 10px;
+	border-radius: 25px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+ol, ul, li {
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  padding-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+img {
+	border: 1.5px solid #d5f2ed
+
+}
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+}
+
+div.wrapdesc{
+	width: 90%;
+	margin: auto;
+}
+
+div.imagedesc{
+	width: 85%;
+	margin: auto;
+}
+</style>
+    
+<head>
+   
+<title>QAK</title></head>
+    
+<body>
+<div id="top">
+<h1>QActor (meta)model<font size="5"></font> </h1>
+</div>  
+
+<div class="body"> 
+<h2>Introduction</h2>
+<div class="remark">
+
+    <div>
+            <b> QActor</b> is the name given to the language to handle parallel processing in a high-performance network.
+            The language is not intended as a generic language but as a modeling language for the analysis and design of distributed applications. The abbreviation qak refers to the version implemented in <b> Kotlin().</b> <br>
+            The <b>Qak</b> language is defined using the Xtext framework and is based on a core of concepts that make up the QActor metamodel. These concepts can be summarized as follows:
+            
+            <ul>
+            <li>A <span class="blue">QA-System</span> is a collection of active entities (QActors) each working in a
+            computational node (<span class="blue">Context</span>).</p>
+            <blockquote>
+            <div><center><a class="reference internal image-reference" href="img/qacontexts.png"><img alt="img/qacontexts.png" class="align-center" src="img/qacontexts.png" style="width: 40%;" /></a>
+            </center></div></blockquote>
+            </li>
+            <li><span class="blue">QActors interact</span> by using <span class="blue">Messages</span> of different types (Dispatch, Request,...) and Events.</li>
+            <li>A QActor can deliver information to another QActor (both local or remote) by using a
+            proper operations or by emitting events.</li>
+            <li>High-level send-operations do not use low-level references, but only <strong>actor-names</strong>.</li>
+            <li>Each context owns a set QActors that can interact with components (actors or 'aliens') working on
+            a different node, by means of the following protocols:
+            <ul class="simple">
+            <li><span class="blue">TCP</span> : on the port specified by the Context</li>
+            <li><span class="blue">CoAP</span> : on the port specified by the Context</li>
+            <li><span class="blue">MQTT</span> : using the broker specified in the <code class="docutils literal notranslate"><span class="pre">mqttBroker</span></code> declaration</li>
+            </ul>
+            </li>
+            </ul>
+    </div>
+</div>
+ 
+ 
+<h2>Messages and Events</h2>
+<div class="remark">
+ 
+    <p>In the QActor metamodel:</p>
+<ul>
+    <li>a <span class="blue">message</span> is intended as information sent in <strong>asynchronous way</strong>
+    by some source to some specific destination.
+    For <span class="blue">asynchronous</span> transmission, we intend that the messages can be 'buffered' by the infrastructure,
+    while the 'unbuffered' transmission is said to be <span class="blue">synchronous</span>.
+    </li>
+    <li>an <span class="blue">event</span> is intended as information emitted by some source without any explicit destination.
+    Events whose identifier start with the prefix <strong>local_</strong> are <span class="blue">not propagated outside</span> the context in
+    which they are generated.
+    </li>
+</ul>
+<h3>Message handling rules</h3>
+<p>With reference to a user-defined QAkactor <code class="docutils literal notranslate"><span class="pre">qa</span></code> of type <code class="docutils literal notranslate"><span class="pre">ActorBasicFsm</span></code>, let us call:</p>
+<ul class="simple">
+<li><strong>currentState</strong>: the name the current state of <code class="docutils literal notranslate"><span class="pre">qa</span></code>;</li>
+<li><strong>currentMsg</strong>: the msgId of the message that qa is processing;</li>
+<li><strong>kaq</strong>: the message-queue of the Kotlin <a class="reference internal" href="#kactor"><span class="std std-ref">kactor</span></a>;</li>
+<li><strong>msgQueueStore</strong> the message-queue local ActorBasicFsm ;</li>
+<li><strong>tset</strong>: the set of messages mentioned in the transition related to the currentState.</li>
+</ul>
+<p>The method <a class="reference internal" href="#fsmwork"><span class="std std-ref">fsmwork</span></a> is called in a message-driven way  by the <a class="reference internal" href="#kactor"><span class="std std-ref">kactor</span></a> loop ,
+while <code class="docutils literal notranslate"><span class="pre">qa</span></code>  is in <strong>currentState</strong>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">suspend</span> <span class="n">fun</span> <span class="n">fsmwork</span><span class="p">(</span><span class="n">applMsg</span><span class="p">:</span> <span class="n">ApplMessage</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Its behavior is:</p>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">qa</span></code> checks for a transition related to <code class="docutils literal notranslate"><span class="pre">applMsg</span></code>:</p>
+<ul class="simple">
+<li>if it is possible to fire a transition, set <code class="docutils literal notranslate"><span class="pre">currentMsg=applMsg</span></code>, change the <code class="docutils literal notranslate"><span class="pre">currentState</span></code> and goto 2)</li>
+<li>if no transition can be fired and <code class="docutils literal notranslate"><span class="pre">discardMessages=false</span></code>, store the message in the <code class="docutils literal notranslate"><span class="pre">msgQueueStore</span></code>;</li>
+</ul>
+</li>
+<li>qa executes the actions of a state.
+When the state actions terminate, if there is an empty-move goto 3) else goto 4);</li>
+<li>qa executes a empty-move:
+<code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">currentMsg=NoMsg=noMsg</span></code> , change the <code class="docutils literal notranslate"><span class="pre">currentState</span></code>, and goto 2)</li>
+<li>qa looks at the <code class="docutils literal notranslate"><span class="pre">msgQueueStore</span></code> and</li>
+</ol>
+<div><ul class="simple">
+<li>if a message <code class="docutils literal notranslate"><span class="pre">ms</span></code> is found in <code class="docutils literal notranslate"><span class="pre">tset</span></code> : call <code class="docutils literal notranslate"><span class="pre">fsmwork(ms)</span></code>;</li>
+<li>if no message is found : terminate <code class="docutils literal notranslate"><span class="pre">fsmwork</span></code> (the next call will be perfomed by the <a class="reference internal" href="#kactor"><span class="std std-ref">kactor</span></a> loop );</li>
+</ul>
+</div>
+<h3>Message delivery rules</h3>
+<ul class="simple">
+<li>A message sent from actor <code class="docutils literal notranslate"><span class="pre">qa</span></code> to a local actor <code class="docutils literal notranslate"><span class="pre">qb</span></code>, is inserted in the <code class="docutils literal notranslate"><span class="pre">kaq</span></code> of the <a class="reference internal" href="#kactor"><span class="std std-ref">kactor</span></a> of <code class="docutils literal notranslate"><span class="pre">qb</span></code>.</li>
+<li>An event raised in some Context, is delivered to all the other known Contexts of the system and to all the 'alien' connected via TCP or via MQTT.</li>
+</ul>
+<p>When a message sent from <code class="docutils literal notranslate"><span class="pre">qa</span></code> to actor <code class="docutils literal notranslate"><span class="pre">qb</span></code> working in a different context (on a different node),
+the Qak-Infrastructure attempts to find the ipaddress-port of the receiver context:</p>
+<ul class="simple">
+<li>If information about the context of <code class="docutils literal notranslate"><span class="pre">qb</span></code> is found and a MQTT broker is specified in the model,
+the message is sent via MQTT; otherwise it is sent via CoAP.</li>
+<li>If no information about the context of <code class="docutils literal notranslate"><span class="pre">qb</span></code> is found, the message to deliver should be a reply
+to a request made by some 'alien'.
+The system first checks for the existence of an active TCP connection with the receiver
+(the 'alien' made a request via TCP).
+In such a connection is found, the message is sent over it.
+Otherwise, an attempt is made to send the reply via MQTT, hoping that the 'alien' was MQTT-connected.</li>
+</ul>
+</div>
+ 
+
+<h2>High-level message-operations</h2>
+<div class="remark">
+<p>The methods that an application designer can use to deliver messages are:</p>
+<ul class="simple">
+<li><span class="blue">forward</span> for a Dispatch</li>
+<li><span class="blue">request</span>, <span class="blue">replyTo</span>, <span class="blue">askFor</span> for a Request</li>
+<li><span class="blue">emit</span> for an Event</li>
+</ul>
+<p><span class="remark">The QActor metamodel does not define any explicit receive operation.</span></p>
+<p>In fact, the behavior of a QActor is modeled as a <a class="reference external" href="https://it.wikipedia.org/wiki/Macchina_di_Moore">Moore machine</a> in which state-transitions
+are triggered by messaged and events.</p>
+<section id="transitions-and-guards-in-qak">
+<h3>Transitions and guards in Qak</h3>
+<ul class="simple">
+<li>A <span class="blue">Transition</span> is 'fired' if the related condition (<code class="docutils literal notranslate"><span class="pre">whenTime,</span> <span class="pre">whenEvent,</span> <span class="pre">whenMsg,</span> <span class="pre">...</span></code>)
+together with the related guard (if any) is true.</li>
+<li>A <span class="blue">guard</span> is expressed as a condition written in user-defined Kotlin code.</li>
+</ul>
+
+</div>
+
+<h2>Qak specification template</h2>
+<div class="remark">
+    <p>Un modello Qak viene definito organizzando la sua descrizione in base al seguente template:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">System</span> <span class="o">&lt;</span> <span class="n">NAME</span> <span class="n">OF</span> <span class="n">THE</span> <span class="n">SYSTEM</span> <span class="o">&gt;</span>
+<span class="o">//</span><span class="n">mqttBroker</span> <span class="s2">&quot;broker.hivemq.com&quot;</span> <span class="p">:</span> <span class="mi">1883</span> <span class="o">//</span><span class="n">OPTIONAL</span>
+
+<span class="o">//</span><span class="n">DECLARATION</span> <span class="n">OF</span> <span class="n">MESSAGES</span> <span class="n">AND</span> <span class="n">EVENTS</span>
+
+<span class="o">//</span><span class="n">DECLARATION</span> <span class="n">OF</span> <span class="n">CONTEXTS</span>
+<span class="n">Context</span> <span class="n">CTXNAME</span> <span class="n">ip</span> <span class="p">[</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;HOSTIP&quot;</span> <span class="n">port</span><span class="o">=</span><span class="n">PORTNUM</span><span class="p">]</span>
+
+<span class="o">//</span><span class="n">DECLARATION</span> <span class="n">OF</span> <span class="n">ACTORS</span>
+</pre></div>
+</div>
+</div>
+ 
+
+<h2>The Qak syntax</h2> 
+<div class="remark"> 
+
+    <p>The syntax of the language is defined in <a class="reference external" href="./_static/Qactork.xtext">Qak syntax</a>) using the <a class="reference external" href="https://www.eclipse.org/Xtext/:https://www.eclipse.org/Xtext/">Xtext</a> framework. Riportiamo alcuni esempi.</p>
+    <section id="dichiarazione-dei-messaggi">
+    <h4>Dichiarazione dei messaggi</h4>
+    <p>I diversi tipi di messaggio sono dichiarati usando una sintassi Prolog-like (si veda <a class="reference external" href="http://amsacta.unibo.it/5450/7/tuprolog-guide.pdf">tuProlog</a> ):</p>
+    <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Event</span><span class="p">:</span>    <span class="s2">&quot;Event&quot;</span>     <span class="n">name</span><span class="o">=</span><span class="n">ID</span>  <span class="s2">&quot;:&quot;</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">PHead</span>  <span class="p">;</span>
+    <span class="n">Dispatch</span><span class="p">:</span> <span class="s2">&quot;Dispatch&quot;</span>  <span class="n">name</span><span class="o">=</span><span class="n">ID</span>  <span class="s2">&quot;:&quot;</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">PHead</span>  <span class="p">;</span>
+    <span class="n">Request</span><span class="p">:</span>  <span class="s2">&quot;Request&quot;</span>   <span class="n">name</span><span class="o">=</span><span class="n">ID</span>  <span class="s2">&quot;:&quot;</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">PHead</span>  <span class="p">;</span>
+    <span class="n">Reply</span><span class="p">:</span>    <span class="s2">&quot;Reply&quot;</span>     <span class="n">name</span><span class="o">=</span><span class="n">ID</span>  <span class="s2">&quot;:&quot;</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">PHead</span>  <span class="p">;</span>
+    
+    <span class="n">PHead</span> <span class="p">:</span>       <span class="n">PAtom</span> <span class="o">|</span> <span class="n">PStruct</span> <span class="o">|</span> <span class="n">PStructRef</span> <span class="p">;</span>
+    <span class="o">...</span>
+    </pre></div>
+    </div>
+    <h4>Operazioni di invio-messaggi</h4>
+<p>Le operazioni di invio messaggio sono le seguenti:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Forward</span>   <span class="p">:</span> <span class="s2">&quot;forward&quot;</span> <span class="n">dest</span><span class="o">=</span><span class="p">[</span><span class="n">QActorDeclaration</span><span class="p">]</span>
+                      <span class="s2">&quot;-m&quot;</span> <span class="n">msgref</span><span class="o">=</span><span class="p">[</span><span class="n">Dispatch</span><span class="p">]</span> <span class="s2">&quot;:&quot;</span> <span class="n">val</span> <span class="o">=</span> <span class="n">PHead</span> <span class="p">;</span>
+<span class="n">Emit</span>      <span class="p">:</span> <span class="s2">&quot;emit&quot;</span> <span class="n">msgref</span><span class="o">=</span><span class="p">[</span><span class="n">Event</span><span class="p">]</span> <span class="s2">&quot;:&quot;</span> <span class="n">val</span> <span class="o">=</span> <span class="n">PHead</span>     <span class="p">;</span>
+<span class="n">Demand</span>    <span class="p">:</span> <span class="s2">&quot;request&quot;</span> <span class="n">dest</span><span class="o">=</span><span class="p">[</span><span class="n">QActorDeclaration</span><span class="p">]</span>
+                      <span class="s2">&quot;-m&quot;</span> <span class="n">msgref</span><span class="o">=</span><span class="p">[</span><span class="n">Request</span><span class="p">]</span>  <span class="s2">&quot;:&quot;</span> <span class="n">val</span> <span class="o">=</span> <span class="n">PHead</span> <span class="p">;</span>
+<span class="n">Answer</span>    <span class="p">:</span> <span class="s2">&quot;replyTo&quot;</span> <span class="n">reqref</span><span class="o">=</span><span class="p">[</span><span class="n">Request</span><span class="p">]</span>
+                      <span class="s2">&quot;with&quot;</span>    <span class="n">msgref</span><span class="o">=</span><span class="p">[</span><span class="n">Reply</span><span class="p">]</span>   <span class="s2">&quot;:&quot;</span> <span class="n">val</span> <span class="o">=</span> <span class="n">PHead</span> <span class="p">;</span>
+<span class="n">ReplyReq</span>  <span class="p">:</span> <span class="s2">&quot;askFor&quot;</span>  <span class="n">reqref</span><span class="o">=</span><span class="p">[</span><span class="n">Request</span><span class="p">]</span>
+                      <span class="s2">&quot;request&quot;</span> <span class="n">msgref</span><span class="o">=</span><span class="p">[</span><span class="n">Request</span><span class="p">]</span> <span class="s2">&quot;:&quot;</span> <span class="n">val</span> <span class="o">=</span> <span class="n">PHead</span> <span class="p">;</span>
+</pre></div>
+</div>
+</div>
+
+
+<h2>The QActor software factory</h2> 
+<div class="remark">
+The mapping between the high-level communication actions and a specific protocol is done by the QActor-infrastructure with the help of the Eclipse QActor software factory. <br>
+
+<center> <img src="img/qakSoftwareFactory.png" alt="Requirements overview" style="width:38%" hspace="20" vspace="20"/> </center> <br>
+The metamodel is supported by the qak-infrastructure defined in the project it.unibo.qakactor and deployed in it.unibo.qakactor-2.7.jar.
+
+<h4>System description</h4>
+
+    Given a system named xxx, the Qak Software Factory generates a file xxx.pl that includes a description (written in Prolog) of the system. Moreover, it generates a utility file sysRules.pl that is used by the QActor-infrastructure when it needs knowledge about the system.
+
+<h4>CodedQActors</h4>
+The Qak factory introduces a syntax-driven editor that makes it easy to write templates in the QAk language. This facilitation is especially useful when the models are a result of problem analysis (or even, in some cases, requirements). <br>
+In other situations, however, it is not excluded that it is preferable to introduce actors written directly in Kotlin (or in Java) and use them as a kind of predefined components in models described in QAk language.
+
+
+</div>
+ 
+ 
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+	      	
+<br/><br/> 	
+</div>  

@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!--
+<link rel="stylesheet" type="text/css" href="../css/issStyle1.css">
+<script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+<style type="text/css">
+    body
+    {
+        margin-left:  30px;
+        margin-right: 30px;
+    };
+    
+    P
+    {
+        font-family: Tahoma;
+        font-size: 10pt;
+    };
+    
+    a, a:visited, a:active, a:link, a:hover {
+        text-decoration: underline;
+        color: #545454;
+        background-color: transparent;
+        font-size: 93%;
+    }
+    
+    a:hover {
+        background-color: #cccccc;
+    }
+    
+    
+    hr {
+        clear: both;
+        height: 1px;
+        color: #242424;
+        background-color: transparent;
+    }
+    
+    h1, h2, h3 {
+        color: #242424;
+        clear: left;
+        font: 100% Tahoma, Helvetica, Arial, sans-serif;
+        margin-bottom: 0.5em;
+        padding-top: 0.5em;
+        border-radius: 10px;
+        padding: 5px;
+    }
+    
+    top {
+        width: 100%;
+    }
+    
+    
+    #i {
+        color: #ff1010;
+    }
+    tt{
+        font-family: "Arial";
+        font-size: 90%;
+        color: #006600;
+    }
+    em{
+        font-family: "Arial";
+        font-size: 80%;
+        font-weight: bold;
+        border-style:solid;
+        border-color: #abe876;
+        color: #1632cc;
+    }
+    bc{
+        font-family: "Arial";
+        font-size: 90%;
+        font-weight: bold;
+        color: #990000;
+        background-color: #fcf8c7;
+    }
+    ks{
+        font-family: "Arial";
+        font-weight: bold;
+        color: #0000CD	;
+        font-size: 90%;
+    }
+    kc{
+        font-family: "Arial";
+        font-weight: bold;
+        color: #008000	;
+        font-size: 90%;
+    }
+    pre{
+        font-family: "Consolas";
+        font-size: 85%;
+        background-color: #f5f5f5;
+        border: 1.5px solid silver;
+        padding: 5px;
+    }
+    m{
+        font-family: "Helvetica";
+        line-height: 100%;
+         font-size: 75%;
+    }
+    div.body{
+         
+        font-size: 18px;
+    }
+    k{
+        color: #990000;
+        font-weight: bold;
+        font-size: 90%;
+    }
+    h1 {
+        font-size: 150%;
+        background-color: #b2c0ff;
+        padding: 10px;
+    }
+    
+    h2 {
+        background-color: #9ed8ff;
+        font-size: 130%;
+    }
+    
+    h3 {
+        background-color: #e6ccff;
+        font-size: 100%;
+    }
+    h4 {
+        background-color: #ccffcc;
+        font-size: 100%;
+        width: 95%;
+        border-radius: 5px;
+        padding: 2px;
+    }
+    h5 {
+        background-color: #d5ffb0;
+        font-size: 100%;
+    
+    }
+    div.req{
+        background-color: #d9ffb3;
+        font-size: 18px;
+        width: 700px;
+        border: 3px solid green;
+        padding: 15px;
+        margin: 10px;
+    }
+    div.remark{
+        background-color: #E3F2FD;
+        border: 1.5px solid #d5f2ed;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 25px;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    
+    ol, ul, li {
+      margin: 0;
+      margin-left: 10px;
+      padding: 0;
+      padding-bottom: 5px;
+    }
+    
+    table, th, td {
+        border: 1px solid black;
+    }
+    
+    img {
+        border: 1.5px solid #d5f2ed;
+        
+    
+    }
+    
+    a, a:visited, a:active, a:link, a:hover {
+        text-decoration: underline;
+        color: #545454;
+        background-color: transparent;
+    }
+    
+    div.wrapdesc{
+        width: 90%;
+        margin: auto;
+    }
+    
+    div.imagedesc{
+        width: 85%;
+        margin: auto;
+    }
+    </style>
+        
+    
+<head>
+   
+<title>AnalisiFinale</title></head>
+    
+<body>
+<div id="top">
+<h1>ISS FINAL PROJECT 2022- WasteService <font size="5"></font> </h1>
+</div>  
+
+<div class="body"> 
+<h2>Introduction</h2>
+
+    <div class="remark">
+        Progetto finale del corso di Ingegneria dei Sistemi Software M, Laurea Magistrale di Ingegneria Informatica - Universit&agrave di Bologna.
+        L'obiettivo &egrave simulare un impianto per la raccolta differenziata dei rifiuti, nel quale un robot, che funge da <strong>Transport Trolley</strong>, deve trasportare il materiale di scarto immesso da un porta nei relativi contenitori in base al tipo di oggetto, nello specifico si distinguer&agrave tra oggetti in plastica e in vetro.
+   </div>
+ 
+<h2>Requirements</h2>
+    <div class="remark">
+        Una compagnia, per differenziare l'immondizia raccolta, intende costruire un WasteService composto da un set di elementi: <br>
+        1. un'area di servizio (rettangolare, piatta) che include: <br>
+            <ul>
+                <li>una porta <em>INDOOR</em>, dove entra l'immondizia</li>
+                <li>un container <em>PlasticBox</em>, che ha l'obiettivo di raccogliere gli oggetti plastica, fino a un MAXPB kg</li>
+                <li>un container <em>GlassBox</em>, che ha l'obiettivo di raccogliere gli oggetti vetro, fino a un MAXGB kg</li>
+            </ul> <br>
+        L'area di servizio &egrave libera da ostracoli interni, e si mostra come l'immagine che segue: <br>
+        <img src="./img/WasteServiceRoom.PNG" width="100%" height="100%" ><br>
+        2. Un robot DDR che funge da <strong>Transport Trolley</strong> e che inizialmente &egrave situato nella sua posizione di <em>HOME</em>. Questo <strong>Transport Trolley</strong> ha la forma di un quadrato di lunghezza laterale <strong>RD</strong>.<br>
+        
+            <p>Il <cite><strong>Transport Trolley</strong></cite> viene utilizzato per <span class="blue">svolgere un'azione di deposito</span> che consiste nelle seguenti fasi:</p>
+            
+            <ol class="arabic simple">
+                <li>raccogliere un carico di  <span class="blue">rifiuti da un camion dei rifiuti</span> situato all' <cite>INDOOR</cite></li>
+                <li>passare dall' <cite>INDOOR</cite>all'apposito contenitore dei rifiuti</li>
+                <li>depositare il carico di scarto nel contenitore</li>
+            </ol>
+            <br>
+
+        3. Un <em>Service-manager</em>(un essere umano) che supervisiona lo stato dell'area di servizio utilizzando una <em>WasteServiceStatusGUI</em> <br>
+        <br>
+        4. Un <em>Sonar</em> e un <em>Led</em> collegati ad un RaspberryPy. Il led verr&agrave usato come dispositivo di segnalazione, secondo il seguente schema:<br>
+    
+            <ul class="simple">
+                <li>Il <cite>Led</cite> &egrave <strong>spento </strong> il <strong>Transport Trolley</strong> &egrave in <cite>HOME</cite></li>
+                <li>Il <cite>Led</cite> <strong>lampeggia</strong> mentre il <strong>Transport Trolley</strong> &egrave in movimento</li>
+                <li>Il <cite>Led</cite> &egrave <strong>acceso</strong> quando il <strong>Transport Trolley</strong> &egrave fermo.</li>
+            </ul>
+
+            <p>
+                Il <cite>Sonar</cite> invece viene usato come dispositivo di allarme: quando misura una distanza inferiore ad un valore prefissato  <strong>DLIMT</strong>,
+                il <strong>Transport Trolley</strong> deve essere fermato. 
+                Verr&agrave ripreso quando il Sonar rilever&agrave una distanza maggiore di <strong>DLIMT</strong>.
+            </p>
+               
+        <h3>TFRequirement</h3>
+        <h4>L'obiettivo del WASTESERVICE software &egrave quello di permettere a un <i>camion dei rifiuti</i>  di depositare il proprio <i>TruckLoad</i>(kg) o di plastica o vetro nel container giusto(<i>PasticBOX,GlassBOX</i>). </h4>
+            
+            La simulazione pu&ograve essere descritta come segue:       
+            <ol class="arabic simple">
+                <li>Il <i>camion dei rifiuti</i> approccia <i>INDOOR</i> area e manda (mediante uno "Smart Device") una richiesta di
+                    di depositare il carico, specificando il tipo del materiale (plastica o vetro) e il suo <i>TruckLoad</i> .</li>
+                <li>Il WASTESERVICE manda una risposta di <i>loadaccept</i> se il contenuto del finale del container giusto 
+                    non sorpassa il valore massimo consentito (MAXPB or MAXGB). Altrimenti manda una risposta di <i>loadrejecetd</i>
+                    e il <i>camion dei rifiuti</i>  lascia l'<i>INDOOR</i>  area.</li>
+                <li>Quando il carico &egrave accettato, il transport Trolley ragiunge l'<i>INDOOR</i> , prende il materiale,
+                    va al giusto container e deposita il materiale. Durante il WASTESERVICE il Led lampeggia.</li>
+                <li>Quando l'azione di deposito &egrave terminata, il transport Trolley esegue un altro comando di deposito (se ce ne sono) o ritorna a casa.</li>
+            </ol>
+        
+
+        <h4>Il WasteService deve creare una <i>WasteServiceStatusGUI</i> che permette al Service-manager di vedere:</h4>
+
+         
+            <ul>
+                <li>Lo stato corrente del transport Trolley e il suo posizionamento nella stanza.</li>
+                <li>Il peso corrente dei materiali presenti nei due container dei rifiuti.</li>
+                <li>Lo stato corrente del Led.</li>
+            </ul>
+    </div>  
+<h2>Requirement analysis</h2>
+    <div class="remark">
+        <h3> Dizionario</h3>  
+        <ul>
+            <li><ks>WasteService</ks>:si occupa del coordinamento delle attivit&agrave di raccolta e smistamento dei rifiuti. 
+                                    Contiene buona parte della business logic del sistema
+            <br>Pu&ograve essere formalizzato tramite l'attore <u>wasteserviceactor</u> presente nel file <a href="./files/wasteservice.qak" target="wasteservice">wasteservice.qak</a>.
+            <br>In fase di test si assumera che il truckDriver, sar&agrave una UI Python che mander&agrave il messaggio al WastService.
+            <br>I test consisteranno nell'invio della richiesta di deposito al WasteService.
+            <br>Il wasteService dovr&agrave rispondere con un <strong>loadAccept</strong> dato che il peso &egrave inferiore a quello rimanente.
+            <br>Il wasteService dovr&agrave rispondere con un <strong>loadRejecetd</strong> dato che il peso &egrave superiore a quello rimanente.
+            <br>
+            [File di test].</li>
+            <li><ks>Smart devices</ks>:Dispositivo attraverso il quale il Waste-truck comunica al WasteService:
+                <ul>
+                    <li>Il tipo di materiale trasportato:</li>
+                    <ul>
+                        <li>PLASTIC</li>
+                        <li>GLASS</li>
+                    </ul>
+                    <li>Kg di materiale</li>
+                </ul>
+                Dopo aver mandato un messaggio di richiesta per chiedere se &egrave  possibile o desiderare il carico, tramite un metodo che riceve in entrata il <b>truckLoad e truckType</b>. <br>         
+                <k>Request deposit:deposit(truckLoad,truckType)</k> 
+                Successivamente ricever&agrave dal WasteService l'esito, che pu&ograve essere <b>LoadAccepted</b> o <b>LoadRejected</b> (dopo aver effettuato i relativi controlli).</li>
+            <li><ks>Loadaccept</ks>: la risposta inviata dal <strong>WasteService</strong> se il carico di rifiuti non pu&ograve essere accettato.
+            <k>Reply loadaccept : loadaccpet(_)</k></li>
+            <li><ks>Loadrejected</ks>: la risposta inviata dal <strong>WasteService</strong> se il carico di rifiuti pu&ograve essere accettato.
+            <k>Reply loadreject : loadreject(_)</k>   </li>
+            <li><ks>Service area</ks>: una stanza rettangolare, priva di ostacoli interni delimitata da un bordo, dove il robot si muover&agrave. La stanza deve comprendere le zone <strong>Indoor, PlasticBox, GlassBox, Home</strong>.</li>
+            <li><ks>Indoor</ks>: porta di ingresso adibita all'operazione di carico dei rifiuti </li>
+            <li><ks>Transport Trolley</ks>: entit&agrave utilizzata al fine di comandare il DDR Robot 
+            <br>[Il committente fornisce gi&agrave del software relativamente a ci&ograve in <u>it.unibo.basicrobot22</u>]
+            <br> Il tutto potr&agrave essere formalizzato tramite l'attore <u>wastetruckactor</u> presente nel file <a href="./files/wasteservice.qak" target="wasteservice">wasteservice.qak</a>. Su di esso verranno effettuati dei test al fine di verificare la corretta transizione di stato.
+            Il tutto tramite una serie di messaggi che faranno transitare il transportTrolley negli stati di :
+            <ul>
+                <li>Pickup</li>
+                <li>Deposit</li>
+                <li>Home</li>
+            </ul>
+            Il test avr&agrave successo se la risposta del trolley &egrave quella aspettata e se lo stato verr&agrave aggiornato correttamente.
+            <br> [File test] </li>
+            <li><ks>PlasticBox</ks>: container adibito al deposito di materiale plastico, con capienza attuale contPB (valore aggiornato ad ogni scarico in Kg) e capacit&agrave massima pari a MAXPB (valore preimpostato in Kg). Rappresenta la zona dedicata allo scarico di materiale di plastica.</li>
+            <li><ks>GlassBox</ks>: container adibito al deposito di materiale vetroso, con capienza attuale contGB (valore aggiornato ad ogni scarico in Kg) e capacit&agrave massima pari a MAXGB (valore preimpostato in Kg). Rappresenta la zona dedicata allo scarico di materiale di vetro.</li>
+            <li><ks>DDR robot</ks>: Differential Drive Robot, un robot che funge da <strong>Transport Trolley</strong>. &egrave in grado di muoversi nell'ambiente eseguendo semplici comandi di spostamento. Il <strong>Transport Trolley</strong> ha la forma di un quadrato di lunghezza laterale RD.
+            <br>[Il committente fornisce gi&agrave un ambiente di simulazione che implementa un DDR Robot Virtuale e un attore che si interfaccia con esso -> <br> <strong>Documentazione:</strong> <u>VirtualRobot->WEnv</u>. <br><strong>Progetti:</strong> <u>it.unibo.virtualRobot2020, unibo.wenvUsage22 , unibo.basicRobot22</u> ]  </li>
+            <li><ks>Home location</ks>: posizione di partenza fissa all'interno dell'area di servizio dove si trover&agrave il robot prima dell'avvio del software e dove torner&agrave se non ci sono lavori in sospeso.</li>
+            <li><ks>Deposit action</ks>: rappresenta i task del robot, questa attivit&agrave pu&ograve essere suddivisa nelle seguenti fasi:
+                <ul>
+                    <li>il robot deve spostarsi dalla sua posizione attuale (Home/altro) e raggiungere l'indoor</li>
+                    <li>il robot deve raccogliere il carico di rifiuti <strong>(Pickup)</strong></li>
+                    <li>il robot deve spostarsi dall'interno all'apposito container (PlasticBox or GlassBox)</li>
+                    <li>il robot deve depositare i rifiuti nell'apposito container <strong>(Dropout)</strong></li>
+                </ul>
+            </li>
+            <li><ks>Service-manager</ks>: utente che supervisiona lo stato dell'area di servizio utilizzando la <b>WasteServiceStatusGUI</b> </li>
+            <li><ks>WasteServiceStatusGUI</ks>: Pannello di controllo che permette al <strong>Service-manager</strong> di monitorare e di osservare lo stato del <strong>Service-area</strong>, tra cui: 
+                <ul>
+                    <li>lo stato attuale del <strong>Transport Trolley</strong> e la sua posizione nella stanza</li>
+                    <li>Led On: quando il Transport Trolley: &egrave fermo (quando distanza rilevata < DLIMIT)</li>
+                    <li>lo stato attuale del Led</li>
+                </ul>
+            </li>
+            <li><ks>Stato attuale del <strong>Transport Trolley</strong></ks>: rappresentato attravero il LED e indica lo stato del <strong>Transport Trolley</strong>. Ci sono principlalmente 3 modalit&agrave;    
+                <ul>
+                    <li><strong>Led Off:</strong> quando il <strong>Transport Trolley</strong> &egrave in HOME</li>
+                    <li><strong>Led On:</strong> quando il <strong>Transport Trolley</strong> &egrave fermo (quando distanza rilevata < DLIMIT)</li>
+                    <li><strong>Led Blink:</strong> quando il <strong>Transport Trolley</strong> &egrave in movimento, o sta scaricando/caricando materiale</li>
+                </ul>
+            </li>
+            <li><ks>Warning devices</ks>: un <b>Led</b> fisico che rappresenta lo stato Transport Trolley.
+                <br>[Il committente fornisce gi&agrave del software relativamente al LED in <u>it.unibo.radarSystem22.domain</u>,  <a href="https://github.com/anatali/issLab2022/blob/main/it.unibo.raspIntro2022/code/bash/led25GpioTurnOff.sh">LedOff</a>, <a href="https://github.com/anatali/issLab2022/blob/main/it.unibo.raspIntro2022/code/bash/led25GpioTurnOn.sh" >LedOn</a>  ]</li>
+                <br>Il Led pu&ograve essere formalizzato in  <a href="https://github.com/anatali/issLab2022/blob/main/unibo.ledqak22/src/ledqak22.qak" target="led" >LED</a>
+            <li><ks>Alarm devices</ks>: un <b>Sonar</b> fisico che funge da rilevatore di distanza, se la distanza misurata &egrave inferiore a DLIMIT il robot deve essere fermato, verr&agrave riattivato solo quando la distanza torner&agrave ad essere maggiore di DLIMIT.
+                <br>Il committente specifica che &egrave un sensore HC-SR04, anch'esso sar&agrave attaccato ad un RaspberryPi. Inoltre il committente ci fornisce il seguente software: <a href="https://github.com/anatali/issLab2022/blob/main/it.unibo.raspIntro2022/code/radarSystem/SonarAlone.c" target="led" >SonarAlone.c</a>
+                <br>[Il committente fornisce gi&agrave del software relativamente al Sonar in <u>unibo.basicrobot22, it.unibo.radarSystem22.domain, unibo.sonarqak22</u> ]
+            <br> Il Sonar pu&ograve essere formalizzato in <a href="https://github.com/anatali/issLab2022/blob/main/unibo.sonarqak22/src/sonarqak22.qak" target="sonar" >Sonar</a></li>
+            <li><ks>DLIMIT</ks>: distanza limite in cm. Se la distanza attualmente misurata dal Sonar &egrave ≤ DLIMT, il robot deve fermarsi. Quando la distanza misurata > DLIMIT il robot pu&ograve muoversi</li>
+            <li><ks>TruckLoad</ks>: quantitativo di spazzatura in Kg trasportata dal camion di rifiuti.</li>
+ 
+        </ul>    
+    </div>
+
+
+
+<h2>Problem analysis</h2>
+    <div class="remark">      
+        <h3>Service area</h3>
+        <div>
+            Stabilite a priori le posizioni delle zone <ks>INDOOR</ks>, <ks>PlasticBox</ks>, <ks>GlassBox</ks> e <ks>HOME</ks>, la stanza &egrave rappresentabile in due modi:
+                <li><strong>Sistema di coordinate cartesiane</strong>: la stanza viene rappresentata da un piano cartesiano (X,Y) 
+                    in cui l'asse X rappresenta la larghezza della stanza e l'asse Y la lunghezza. La posizione del Transport Trolley sar&agrave quindi espressa come coppia di coordinate (X,Y).</li>
+                    <br>
+                    <center>
+                    <img src="./img/cart.png" width="25%" height="25%" ><br>
+                    </center>
+                    <br>
+                    <li><strong>Sistema matriciale m x n</strong>: la stanza viene rappresentata da una matrice m x n in cui m rappresenta la lunghezza della stanza e n la larghezza.
+                        I valori della matrice aij = 1 rappresentano le zone gi&agrave visitate della matrice, i valori nulli quelle non visitate e con le X gli eventuali ostacoli. Infine con il valore aij = r &egrave rappresentata la posizione corrente del DDR Robot. Le zone invece 
+                        saranno stabilite a priori ed individuate dalla coppia di coordinate riga colonna ij.</li>
+                    
+                    <p>Un esempio di matrice potrebbe essere:</p>
+                    <pre>
+                        1, 1, 1, 1, 1, 1, 1, 1,
+                        1, 1, 1, 1, 1, 1, 1, 1,
+                        1, 1, r, 0, 0, 0, 0, 1,
+                        1, 0, 0, X, 0, 0, 0, 1,
+                        1, 0, 0, 0, 0, 0, 0, 1,
+                        1, 1, 1, 1, 1, 1, 1, 1, 
+                    </pre>
+                    
+                    L'opzione più indicata per il caso di studio considerato potrebbe essere la rapresentazione matriciale, in quanto conforme e addattabile al software <u>unibo.planner22</u>.
+                    <br>
+        </div>
+        <h3>Punti d'interesse</h3>
+        <div>
+            <p>
+               Fase essenziale del progetto sar&agrave capire come rappresentare e individuare le coordinate dei punti d'interesse(Home, PlasticBox, Indoor, GlassBox).
+            </p>
+            <p>Potremmo rappresentarle in vari modi:</p>
+            <ul>
+                <li>
+                   Punti su un piano cartesiano (x, y)
+                </li>
+                <li>
+                    Coppia colonna-riga di una matrice A m x n
+                </li>
+                <li>
+                    Tripla di coordinate(i, j, k) 
+                    <ul>
+                        <li>i e j coordinate matriciali per individuare la posizione corrente del DDR</li>
+                        <li>k il verso in cui si sta muovendo il DDR</li>
+                    </ul>
+                 </li>
+            </ul>
+            <p>Per le motivazioni precendentemente discusse, &egrave conveniente utilizzare una rappresentazione matriciale dato che il software <u>unibo.planner22</u>, fornito dal committente, le richiede per una corretta esecuzione.</p>
+        
+        </div>
+
+        <h3>Robot</h3>
+        <div>
+            Si dovr&agrave capire come il robot si dovr&agrave muovoere all'interno dell'aria di servizio e su come determiner&agrave informazioni. 
+            Ogni step verr&agrave comandato dal messaggio:
+
+            <pre>request basicrobot -m step : step(TIME)</pre>
+
+            [[?? come fa a muoversi e determinare dove sono punti ?? Fa ogni volta mappa BHOOOOO]]
+        </div>
+
+        <h3>??Sonar?? [Copiato]</h3>
+            <div>
+            <p>Il sistema software che gestisce <k>Sonar</k> viene fornito dal committente sotto forma di: </p>
+            <ul>
+                <li>POJO</li>
+                <li>Function</li>
+                <li>Qak</li>
+            </ul>
+            <p>La soluzione presa in considerazione &egrave quella di trattare il <k>Sonar Osservable</k> come un attore e per rapresentarne un modello abbiamo usufruito del modello Qak fornito dal committente.</p>
+            <p>In seguito dopo aver scelto la tipologia di sviluppo le scelte di interazione del <k>Sonar Osservable</k> con il sistema del WasteService sono due:</p>
+            <ul>
+                <li>Proattivo</li>
+                <li>Reattivo</li>
+            </ul>
+            <p>Si consiglia di usare il modello Osservabile Proattivo in quanto consiste nella continua rilevazione della distanza e nella emissione di eventi con il valore della distanza-misurata.
+                Questi eventi assumono la forma che segue: </p>
+        
+            <pre>msg(distance,event,sonar,_,D,N)</pre> 
+        
+            <p>Dove D &egrave il valore della distanza misurata. Qui sar&agrave l'"Osservatore" a dover captare il messaggio fornito dal <k>Sonar Osservable</k> senza influenzare il suo funzionamento</p> 
+            </div>
+        <h3>Archittetura Logica</h3>
+        <div>
+        Nel nostro sistema il WasteService &egrave il componente controller, ossia quello che contiene le operazioni da svolgere per realizzare le Deposit Actions.
+        Il DDR Robot &egrave collocato sullo stesso contesto del Transport Trolley, dato che cambiando la tecnologia di movimento usata andrebbe modificato anch'esso. 
+        LED e Sonar concreti sono collegati al RaspberryPi, di conseguenza stanno su un contesto a parte.
+        </div>
+    </div>
+
+
+<!--
+<h2>Test plans</h2> 
+<h2>Project</h2> 
+<h2>Testing</h2> 
+<h2>Deployment</h2> 
+<h2>Maintenance</h2> 
+  -->
+
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+	      	
+<br/><br/> 	
+</div>  
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:100%;text-align:left;color:white">
+    <table style="border: 0px solid transparent; margin: 0 auto;">
+        <tr>
+            <th style="width: 50%;">
+                    <p>
+                        <b>Lorenzo Di Palma</b><br/><br/>
+                        <span><b>ISS repo: <a id="issRepo" style="color:white" href="https://github.com/lollofred/iss2022">https://github.com/lollofred/iss2022</a></b></span><br/><br/>
+                        Contacts:<br/>
+                        e-mail: lorenzo.dipalma2@studio.unibo.it  <br/>
+                        GitHub: <a id="github" style="color:white" href="https://github.com/lollofred">lollofred</a><br/>
+                    </p>
+                        <img src="./img/lorenzo.jpg" alt="Lorenzo Di Palma" width="200px" height="200px">
+            </th>
+            <th style="width: 50%;">  
+                <p>
+                <b>Luigi di Nuzzo</b><br/><br/>
+                <span><b>ISS repo: <a id="issRepo" style="color:white" href="https://github.com/luigidinuzzo/iss2022">https://github.com/luigidinuzzo/iss2022</a></b></span><br/><br/>
+                Contacts:<br/>
+                e-mail: luigi.dinuzzo@studio.unibo.it  <br/>
+                GitHub: <a id="github" style="color:white" href="https://github.com/luigidinuzzo">luigidinuzzo</a><br/>
+                </p>
+                 <img src="./img/luigi.jpeg" alt="Luigi di Nuzzo" width="200px" height="200px">             
+
+
+            </th>
+        </tr>
+    </table>
+</div> 
+</body>
+</html>

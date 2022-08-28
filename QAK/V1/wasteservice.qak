@@ -1,0 +1,47 @@
+System wasteservice
+
+Request depositrequest : depositrequest(MATERIAL, TRUCKLOAD)
+Reply loadaccept       : loadaccept(_)
+Reply loadrejected     : loadrejected(_)
+
+Context ctxwasteservice ip [host = "localhost" port = 8032]
+
+QActor wasteserviceactor context ctxwasteservice {
+   
+    [#
+        var currentcurrentRequestMaterialToStore = ""
+        var currentRequestTruckloadToStore = 0.0
+        val currentMaterialsWeightsMap = mutableMapOf<String, Double>("Plastic" to 0.0, "Glass" to 0.0)
+        val maxMaterialsWeightsMap = mutableMapOf<String, Double>("Plastic" to 500.0, "Glass" to 500.0)
+    #]
+
+    State idle initial {
+        println("$name | in idle")
+        printCurrentMessage
+    }
+
+    Transition t0 whenRequest depositrequest -> handlerequest
+   
+    State handlerequest {
+        printCurrentMessage
+        onMsg(depositrequest : depositrequest(MATERIAL, TRUCKLOAD)){
+            [#
+                currentRequestMaterialToStore = payloadArg(0)
+                currentRequestTruckloadToStore = payloadArg(1).toDouble()
+                val currentWeightMaterialToStore = currentMaterialsWeightsMap[currentRequestMaterialToStore]
+                val currentMaxWeightMaterialToStore = maxMaterialsWeightsMap[currentRequestMaterialToStore]
+               
+            #]
+            if[# currentWeightMaterialToStore != null &&
+                (currentWeightMaterialToStore + currentRequestTruckloadToStore) <= currentMaxWeightMaterialToStore #]
+                {
+                    [# currentMaterialsWeightsMap[currentRequestMaterialToStore] = currentWeightMaterialToStore + currentRequestTruckloadToStore #]
+                    replyTo depositrequest with loadaccept : loadaccept(_)
+                }
+            else{
+                replyTo depositrequest with loadrejected : loadrejected(_)
+            }
+        }
+    }
+    Goto idle
+}
