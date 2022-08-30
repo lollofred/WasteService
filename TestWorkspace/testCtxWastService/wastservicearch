@@ -1,0 +1,16 @@
+digraph wastserviceArch {
+	graph [fontcolor="#2D3436" fontname="Sans-Serif" fontsize=22 label=wastserviceArch nodesep=0.60 pad=2.0 rankdir=LR ranksep=0.75 splines=ortho]
+	node [fixedsize=true fontcolor="#2D3436" fontname="Sans-Serif" fontsize=13 height=1.4 imagescale=true labelloc=b shape=box style=rounded width=1.4]
+	edge [color="#7B8894"]
+	a1b2ae892d884bce837a3f4263bd1632 -> "996d8736e6ec4290953cf9fe79674f7b" [color=blue dir=forward fontcolor="#2D3436" fontname="Sans-Serif" fontsize=13 style=solid xlabel=goto]
+	"996d8736e6ec4290953cf9fe79674f7b" -> a1b2ae892d884bce837a3f4263bd1632 [color=blue dir=forward fontcolor="#2D3436" fontname="Sans-Serif" fontsize=13 style=solid xlabel=executeaction]
+	subgraph cluster_env {
+		graph [bgcolor="#E5F5FD" fontname="Sans-Serif" fontsize=12 label=env labeljust=l pencolor="#AEB6BE" rankdir=LR shape=box style=rounded]
+		"88a4bb375263469d84b41a5e024b8ec9" [label="" height=1.9 image="./qakicons/system.png" shape=none]
+		subgraph cluster_ctxwasteservice {
+			graph [bgcolor=lightyellow fontname="Sans-Serif" fontsize=22 label=ctxwasteservice labeljust=l pencolor="#AEB6BE" rankdir=LR shape=box style=rounded]
+			a1b2ae892d884bce837a3f4263bd1632 [label=wasteservice height=1.9 image="./qakicons/symActorSmall.png" shape=none]
+			"996d8736e6ec4290953cf9fe79674f7b" [label=transporttrolley height=1.9 image="./qakicons/symActorSmall.png" shape=none]
+		}
+	}
+}
